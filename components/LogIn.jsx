@@ -36,7 +36,7 @@ export default function LoginForm() {
       }
 
       // Berjaya login, redirect ke dashboard
-      router.replace("/dashboard");
+      router.push("/dashboard");
     } catch (error) {
       console.log("Login error:", error);
       setError("Ralat login");

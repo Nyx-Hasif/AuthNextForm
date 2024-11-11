@@ -17,21 +17,31 @@ const authOptions = {
         try {
           await connectDB();
 
-          // Cari pengguna
-          const user = await User.findOne({ email });
+          const user = await User.findOne({ email: credentials.email });
+
           if (!user) {
+            console.log("User not found");
             return null;
           }
 
-          // Semak kata laluan
-          const passwordMatch = await bcrypt.compare(password, user.password);
+          const passwordMatch = await bcrypt.compare(
+            credentials.password,
+            user.password
+          );
+
           if (!passwordMatch) {
+            console.log("Password does not match");
             return null;
           }
 
-          return user;
+          return {
+            id: user._id.toString(),
+            name: user.name,
+            email: user.email,
+          };
         } catch (error) {
-          console.log("Error:", error);
+          console.error("Authorization error:", error);
+          return null;
         }
       },
     }),
