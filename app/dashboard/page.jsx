@@ -7,26 +7,35 @@ export default function DashboardPage() {
   const { data: session, status } = useSession();
 
   useEffect(() => {
+    // Debug purposes
     console.log("Session Status:", status);
     console.log("Session Data:", session);
 
+    // Redirect logic
     if (status === "unauthenticated") {
-      redirect("/login");
+      redirect("/");
     }
   }, [status, session]);
 
+  // Loading state
   if (status === "loading") {
-    return <p>Loading...</p>;
+    return (
+      <div className="flex justify-center items-center h-screen">
+        Loading dashboard...
+      </div>
+    );
   }
 
-  if (status === "unauthenticated") {
-    return null; // Atau redirect manual
+  // Extra protection
+  if (!session) {
+    return null;
   }
 
   return (
     <div>
       <h1>Dashboard</h1>
       <p>Selamat datang, {session?.user?.name}</p>
+      {/* Tambah dashboard content */}
     </div>
   );
 }
