@@ -66,7 +66,7 @@ const authOptions = {
   },
 
   pages: {
-    signIn: "/",
+    signIn: "/dashboard",
   },
 
   secret: process.env.NEXTAUTH_SECRET,
